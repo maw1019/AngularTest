@@ -1,0 +1,21 @@
+<table class="table" style="margin: auto">
+  <thead>
+    <tr>
+      <td>餐廳名</td>
+      <td>地址</td>
+      <td>菜單</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let restaurant of restaurants" >
+      <td>{{restaurant.name}}</td>
+      <td>{{restaurant.address}}</td>
+      <td><button class="btn btn-info"(click)="onSelect(restaurant)">預覽</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<select (change)=changeEven($event)>
+  <option *ngFor="let restaurant of restaurants">{{restaurant.name}}</option>
+</select>
+

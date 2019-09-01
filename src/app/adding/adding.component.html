@@ -1,0 +1,20 @@
+<p>
+  adding works!
+</p>
+<form #restaurantForm="ngForm" (ngSubmit)="onAddRestaurant(restaurantForm.value)">
+  <table border="0" style="margin: auto">
+      <tr>
+          <td>餐廳名字</td>
+          <td><input type="text" name="restaurantName" ngModel></td>
+      </tr>
+      <tr>
+          <td>餐廳地址</td>
+          <td><input type="text" name="restaurantAddress" ngModel></td>
+      </tr>
+      <tr>
+          <td>餐廳電話</td>
+          <td><input type="text" name="restaurantTel" ngModel></td>
+      </tr>
+      <input type="submit" value="新增">
+  </table>
+</form>
