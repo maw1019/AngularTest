@@ -2,7 +2,8 @@
   adding works!
 </p>
 <form #restaurantForm="ngForm" (ngSubmit)="onAddRestaurant(restaurantForm.value)">
-  <table border="0" style="margin: auto">
+    <input class ="btn btn-success" type="submit" value="新增">
+  <table class="table" style="margin: auto">
       <tr>
           <td>餐廳名字</td>
           <td><input type="text" name="restaurantName" ngModel></td>
@@ -15,12 +16,7 @@
           <td>餐廳電話</td>
           <td><input type="text" name="restaurantTel" ngModel></td>
       </tr>
-      <input type="submit" value="新增">
   </table>
-
-
-
-
-
-  
+<div #menuList></div>
 </form>
+<button  class="btn btn-primary" (click)="addMenu()">菜單+</button>
