@@ -1,7 +1,8 @@
-import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
-import { Restaurant, RestaurantMenu } from '../model/restaurant';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Restaurants } from '../model/mock-restaurants';
 import { Router } from '@angular/router';
+import {  FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-adding',
@@ -9,14 +10,44 @@ import { Router } from '@angular/router';
   styleUrls: ['./adding.component.css']
 })
 export class AddingComponent implements OnInit {
+  restaurantForm: FormGroup;
 
   @ViewChild('menuList') div: ElementRef;
-  constructor(private router: Router, private renderer: Renderer2) { }
 
-  ngOnInit() {
+  constructor(private router: Router) { };
+
+  MenuInputForm: FormGroup;
+
+  get restaurantProduct() {
+    return this.restaurantForm.get('restaurantProduct') as FormArray;
   }
 
-  onAddRestaurant(data) {
+  get restaurantPrice() {
+    return this.restaurantForm.get('restaurantPrice') as FormArray;
+  }
+
+  addMenu() {
+    this.restaurantProduct.push(new FormControl('', Validators.required));
+    this.restaurantPrice.push(new FormControl('', Validators.required));
+  }
+
+  deleteMenu(i){
+    this.restaurantProduct.removeAt(i);
+    this.restaurantPrice.removeAt(i);
+  }
+
+
+  ngOnInit() {
+    this.restaurantForm = new FormGroup({
+      restaurantName: new FormControl('', Validators.required),
+      restaurantAddress: new FormControl('', Validators.required),
+      restaurantTel: new FormControl('', Validators.required),
+      restaurantProduct: new FormArray([], Validators.required),
+      restaurantPrice: new FormArray([], Validators.required)
+    });
+  }
+
+  onAddRestaurant(data: any): void {
     let restaurants = Restaurants.length + 1;
     let addRestaurantDate =
     {
@@ -29,12 +60,17 @@ export class AddingComponent implements OnInit {
     this.router.navigate(['']);
     console.log(data)
   }
-  index = 1;
-  addMenu() {
-    const p: HTMLParagraphElement = this.renderer.createElement('p');
-    p.innerHTML =
-      `菜單 ${this.index} :<input type="text" name="menu_${this.index}" ngModel> 價錢 :<input type="text" name="price_${this.index}" ngModel>`;
-    this.index++;
-    this.renderer.appendChild(this.div.nativeElement, p);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
