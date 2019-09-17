@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Restaurants } from '../model/mock-restaurants';
+import { Restaurants, Menus } from '../model/mock-restaurants';
 import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 
@@ -15,8 +15,8 @@ export class AddingComponent implements OnInit {
   @ViewChild('menuList') div: ElementRef;
 
   constructor(private router: Router) { };
-
   MenuInputForm: FormGroup;
+  boolAddMenu: boolean = false;
 
   get restaurantProduct() {
     return this.restaurantForm.get('restaurantProduct') as FormArray;
@@ -26,16 +26,32 @@ export class AddingComponent implements OnInit {
     return this.restaurantForm.get('restaurantPrice') as FormArray;
   }
 
+  canAddMenu(index) {
+    let ResPro = this.restaurantForm.get('restaurantProduct').value;
+    let ResPri = this.restaurantForm.get('restaurantPrice').value;
+    if (ResPro.length === 0 && ResPri.length === 0) {
+      this.boolAddMenu = false;
+    } else if (!ResPro[index] || !ResPri[index]) {
+      this.boolAddMenu = true;
+    } else {
+      this.boolAddMenu = false;
+    }
+  }
   addMenu() {
     this.restaurantProduct.push(new FormControl('', Validators.required));
     this.restaurantPrice.push(new FormControl('', Validators.required));
+    this.boolAddMenu = true;
   }
 
-  deleteMenu(i){
+  deleteMenu(i) {
+    let ResPro = this.restaurantForm.get('restaurantProduct').value;
+    let ResPri = this.restaurantForm.get('restaurantPrice').value;
     this.restaurantProduct.removeAt(i);
     this.restaurantPrice.removeAt(i);
+    if (ResPro.length === 0 && ResPri.length === 0) {
+      this.boolAddMenu = false;
+    }
   }
-
 
   ngOnInit() {
     this.restaurantForm = new FormGroup({
@@ -56,21 +72,15 @@ export class AddingComponent implements OnInit {
       name: data.restaurantName,
       telphone: data.restaurantTel
     }
+    let addMenuData = {
+      id: restaurants,
+      menu: []
+    }
+    for (let j = 0; j < data.restaurantProduct.length; j++) {
+      addMenuData.menu.push({ price: data.restaurantPrice[j], name: data.restaurantProduct[j] })
+    }
+    Menus.push(addMenuData);
     Restaurants.push(addRestaurantDate);
     this.router.navigate(['']);
-    console.log(data)
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

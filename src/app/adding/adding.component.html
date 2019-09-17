@@ -21,18 +21,18 @@
             <div class="row" *ngFor="let dish of restaurantProduct.controls;let i=index">
                 <div formArrayName="restaurantProduct" class="col-6">
                     <label>品項 {{i+1}}</label>
-                    <input type="text" class="form-control" [formControlName]="i">
+                    <input type="text" class="form-control" [formControlName]="i" (change)="canAddMenu(i)">
                 </div>
                 <div formArrayName="restaurantPrice" class="col-3">
                     <label>價錢{{i+1}}</label>
-                    <input type="text" class="form-control" [formControlName]="i">
+                    <input type="text" class="form-control" [formControlName]="i" (change)="canAddMenu(i)">
                 </div>
                 <div class="col-3">
                     <br>
                     <button class="btn btn-danger" (click)="deleteMenu(i)">刪除</button>
                 </div>
             </div>
-            <button type="button" class="btn btn-info btn-sm m-2" (click)="addMenu()">增加菜單＋</button>
+            <button type="button" class="btn btn-info btn-sm m-2"  [disabled]="boolAddMenu" (click)="addMenu()">增加菜單＋</button>
         </div>
 
 
