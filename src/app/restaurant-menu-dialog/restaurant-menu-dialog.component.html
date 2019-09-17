@@ -1,0 +1,16 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>品項</th>
+      <th>價錢</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let menu of menuList">
+      <td>{{menu.name}}</td>
+      <td>${{menu.price}}</td>
+    </tr>
+  </tbody>
+
+</table>
